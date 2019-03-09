@@ -17,7 +17,7 @@ namespace ReadingList.Controllers
             ViewData["ShelvedBooks"] = shelvedBooks;
             ViewData["Title"] = "MyShelf";
 
-            return View();
+            return View(shelvedBooks);
         }
 
         public IActionResult RateBooks()
