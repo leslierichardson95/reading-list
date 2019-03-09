@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Book>
+
+@{
+    ViewData["Title"] = "MyShelf";
+}
+
+<div class="text-center">
+    <h1 class="display-4">My Shelf</h1>
+    @if (Model == null)
+    {
+        <p>You're shelf is currently empty! <a asp-action="RateBooks">Select books you want to read here!</a></p>
+    }
+    else
+    {
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    }
+</div>

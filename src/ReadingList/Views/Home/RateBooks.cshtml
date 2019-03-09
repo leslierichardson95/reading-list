@@ -1,0 +1,44 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "RateBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Rate Books</h1>
+    @if (Model == null)
+    {
+        <p>You've rated each book in the library already! <a asp-action="Refresh">Click here to refresh your shelf and start from scratch!</a></p>
+
+    }
+    else
+    {
+        <p> Select "Read This Book" to add the book to your shelf or select "Don't Read This Book" to reject the book.</p>
+        
+        <div class="book">
+            <div class="row">
+                <div class="centered">
+                    <img class="book-header__image" src="../absalom-absalom.jpg" alt="Book Cover" />
+                    <h2 class="book-header__title"><a href="@Model.Link">@Model.Title</a></h2>
+                    <div class="book-header__byline">By @Model.Author</div>
+                    <div class="book-header__servings">Year Published: @Model.Year</div>
+                    <div class="book-header__time"> @Model.Pages pages</div>
+                    <div class="btn-toolbar" role="toolbar" style="padding-top:20px">
+                        <a href="/Home/StoreBook/@Model.Id/true"><button class="btn btn-success btn-lg" style="width:250px" onclick="RateNextBook">Read This Book</button></a>
+                        <div style="display:inline-block; width:20px"></div>
+                        <a href="/Home/StoreBook/@Model.Id/false"><button class="btn btn-danger btn-lg" style="width:250px">Don't Read This Book</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<style>
+    .centered {
+       margin:auto;
+       float:none;
+    }
+</style>
