@@ -17,7 +17,12 @@ namespace ReadingList.Models
 
         private static string filePath = "App_Data/books.json";
         private static Random random = new Random();
-        
+
+        // store keys for each dictionary
+        private static List<long> neutralKeysEnumerator = new List<long>();
+        private static List<long> shelvedKeysEnumerator = new List<long>();
+        private static List<long> rejectedKeysEnumerator = new List<long>();
+
         static BookManager()
         {
             // extract book data from JSON file and store in books dictionary
@@ -29,6 +34,8 @@ namespace ReadingList.Models
             }
             // convert list of books to dictionary
             neutralBooks = books.ToDictionary(x => x.Id, x => x);
+
+            neutralKeysEnumerator = neutralBooks.Keys.ToList();
         }
 
         public static List<Book> GetNeutralBooks()
@@ -53,22 +60,35 @@ namespace ReadingList.Models
         public static Book GetNeutralBook()
         {
             int bookIndex = random.Next(neutralBooks.Count);
-            return neutralBooks[bookIndex];
+            Book neutralBook = neutralBooks[neutralKeysEnumerator[bookIndex]];
+            neutralBook.Cover = GetBase64StringForImage(neutralBook.Cover);  // convert image to base 64
+            return neutralBooks[neutralKeysEnumerator[bookIndex]];
         }
 
         public static void RemoveNeutralBook(long id)
         {
             neutralBooks.Remove(id);
+            neutralKeysEnumerator.Remove(id);
         }
 
         public static void AddShelvedBook(long id)
         {
             shelvedBooks.Add(id, neutralBooks[id]);
+            shelvedKeysEnumerator.Add(id);
         }
 
         public static void AddRejectedBook(long id)
         {
             rejectedBooks.Add(id, neutralBooks[id]);
+            rejectedKeysEnumerator.Add(id);
+        }
+
+        // convert book cover images into base 64
+        public static string GetBase64StringForImage(string imgPath)
+        {
+            byte[] imageBytes = System.IO.File.ReadAllBytes(imgPath);
+            string base64String = Convert.ToBase64String(imageBytes);
+            return base64String;
         }
     }
 }

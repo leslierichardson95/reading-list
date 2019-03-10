@@ -9,9 +9,33 @@
     @if (Model.Count() <= 0)
     {
         <p>You're shelf is currently empty! <a asp-action="RateBooks">Select books you want to read here!</a></p>
+
     }
     else
     {
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    @foreach (Book book in ViewData["ShelvedBooks"] as List<Book>)
+                    {
+                        <a asp-action="Book" asp-route-id="@book.Id">
+                            <div class="col-md-4 centered" style="text-align:center">
+                                <div class="card mb-4 box-shadow" style="width:200px; height:auto">
+                                    <img class="img-fluid img-thumbnail" src="data:image/jpg;base64,@book.Cover"
+                                         alt="Image of @book.Title" @*style="width:500px; height:auto"*@>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
     }
 </div>
+
+<style>
+    .centered {
+        margin: auto;
+        float: none;
+    }
+</style>

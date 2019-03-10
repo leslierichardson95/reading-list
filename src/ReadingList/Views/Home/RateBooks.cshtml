@@ -19,7 +19,7 @@
         <div class="book">
             <div class="row">
                 <div class="centered">
-                    <img class="book-header__image" src="../absalom-absalom.jpg" alt="Book Cover" />
+                    <img class="book-header__image" src="data:image/jpg;base64,@Model.Cover" alt="Book Cover" style="width:200px; height:auto"/>
                     <h2 class="book-header__title"><a href="@Model.Link">@Model.Title</a></h2>
                     <div class="book-header__byline">By @Model.Author</div>
                     <div class="book-header__servings">Year Published: @Model.Year</div>
