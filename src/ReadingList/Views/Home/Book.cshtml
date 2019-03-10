@@ -1,0 +1,29 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Book";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>My Shelved Book</h1>
+
+<div class="book text-center">
+    <div class="row">
+        <div class="centered">
+            <img class="book-header__image" src="data:image/jpg;base64,@Model.Cover" alt="Book Cover" style="width:200px; height:auto" />
+            <h2 class="book-header__title"><a href="@Model.Link">@Model.Title</a></h2>
+            <div class="book-header__byline">By @Model.Author</div>
+            <div class="book-header__servings">Year Published: @Model.Year</div>
+            <div class="book-header__time"> @Model.Pages pages</div>
+            <a href="/Home/RemoveBookFromShelf/@Model.Id"><button class="btn btn-danger btn-lg">Remove Book From My Shelf</button></a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .centered {
+        margin: auto;
+        float: none;
+    }
+</style>
+

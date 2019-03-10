@@ -32,6 +32,12 @@ namespace ReadingList.Models
                 string json = r.ReadToEnd();
                 books = JsonConvert.DeserializeObject<List<Book>>(json);
             }
+
+            for (int i = 0; i < books.Count; i++)
+            {
+                books[i].Cover = GetBase64StringForImage(books[i].Cover);
+            }
+
             // convert list of books to dictionary
             neutralBooks = books.ToDictionary(x => x.Id, x => x);
 
@@ -59,16 +65,19 @@ namespace ReadingList.Models
         // retrieve a random neutral book
         public static Book GetNeutralBook()
         {
-            int bookIndex = random.Next(neutralBooks.Count);
-            Book neutralBook = neutralBooks[neutralKeysEnumerator[bookIndex]];
-            neutralBook.Cover = GetBase64StringForImage(neutralBook.Cover);  // convert image to base 64
+            int count = neutralBooks.Count;
+            if (count <= 0)
+            {
+                return null;
+            }
+
+            int bookIndex = random.Next(count);
             return neutralBooks[neutralKeysEnumerator[bookIndex]];
         }
 
-        public static void RemoveNeutralBook(long id)
+        public static Book GetShelvedBook(long id)
         {
-            neutralBooks.Remove(id);
-            neutralKeysEnumerator.Remove(id);
+            return shelvedBooks[id];
         }
 
         public static void AddShelvedBook(long id)
@@ -81,6 +90,53 @@ namespace ReadingList.Models
         {
             rejectedBooks.Add(id, neutralBooks[id]);
             rejectedKeysEnumerator.Add(id);
+        }
+
+        public static void AddNeutralBook(Book book)
+        {
+            neutralBooks.Add(book.Id, book);
+            neutralKeysEnumerator.Add(book.Id);
+        }
+
+        public static void RemoveNeutralBook(long id)
+        {
+            neutralBooks.Remove(id);
+            neutralKeysEnumerator.Remove(id);
+        }
+
+        public static void RemoveShelvedBook(long id)
+        {
+            Book book = GetShelvedBook(id);
+            rejectedBooks.Add(id, book);
+            rejectedKeysEnumerator.Add(id);
+
+            shelvedBooks.Remove(id);
+            shelvedKeysEnumerator.Remove(id);
+
+        }
+
+        public static void RemoveRejectedBook(long id)
+        {
+            rejectedBooks.Remove(id);
+            rejectedKeysEnumerator.Remove(id);
+        }
+
+        public static void ResetAllBooks()
+        {
+            for (int i = 0; i < shelvedBooks.Count; i++)
+            {
+                Book book = shelvedBooks[shelvedKeysEnumerator[i]];
+                AddNeutralBook(book);
+                shelvedBooks.Remove(book.Id);
+                shelvedKeysEnumerator.Remove(book.Id);
+            }
+
+            for (int i = 0; i < rejectedBooks.Count; i++)
+            {
+                Book book = rejectedBooks[rejectedKeysEnumerator[i]];
+                AddNeutralBook(book);
+                RemoveRejectedBook(book.Id);
+            }
         }
 
         // convert book cover images into base 64

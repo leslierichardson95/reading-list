@@ -20,6 +20,16 @@ namespace ReadingList.Controllers
             return View(shelvedBooks);
         }
 
+        public IActionResult Book(long id)
+        {
+            Book shelvedBook = BookManager.GetShelvedBook(id);
+
+            ViewData["ShelvedBook"] = shelvedBook;
+            ViewData["Title"] = "My Shelved Book";
+
+            return View(shelvedBook);
+        }
+
         public IActionResult RateBooks()
         {
             Book neutralBook = BookManager.GetNeutralBook();
@@ -41,6 +51,19 @@ namespace ReadingList.Controllers
                 BookManager.AddRejectedBook(currentBookId);
             }
             BookManager.RemoveNeutralBook(currentBookId);
+            return Redirect("/Home/RateBooks/");
+        }
+
+        public IActionResult RemoveBookFromShelf(long id)
+        {
+            BookManager.RemoveShelvedBook(id);
+            return Redirect("/Home/Index");
+        }
+
+        // Remove all books from shelf and place all books back under neutral books
+        public IActionResult ResetAllBooks()
+        {
+            BookManager.ResetAllBooks();
             return Redirect("/Home/RateBooks/");
         }
 
