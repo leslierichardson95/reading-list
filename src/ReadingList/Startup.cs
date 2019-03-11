@@ -31,6 +31,7 @@ namespace ReadingList
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSingleton<Models.BookManager, Models.BookManager>();
 
             services.AddMvc();
         }

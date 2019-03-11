@@ -11,19 +11,19 @@ namespace ReadingList.Models
     public class BookManager
     {
         // stores list of all books by their id
-        private static readonly Dictionary<long, Book> neutralBooks = new Dictionary<long, Book>();
-        private static readonly Dictionary<long, Book> shelvedBooks = new Dictionary<long, Book>();
-        private static readonly Dictionary<long, Book> rejectedBooks = new Dictionary<long, Book>();
+        private Dictionary<long, Book> neutralBooks = new Dictionary<long, Book>();
+        private Dictionary<long, Book> shelvedBooks = new Dictionary<long, Book>();
+        private Dictionary<long, Book> rejectedBooks = new Dictionary<long, Book>();
 
         private static string filePath = "App_Data/books.json";
-        private static Random random = new Random();
+        private Random random = new Random();
 
         // store keys for each dictionary
         private static List<long> neutralKeysEnumerator = new List<long>();
         private static List<long> shelvedKeysEnumerator = new List<long>();
         private static List<long> rejectedKeysEnumerator = new List<long>();
 
-        static BookManager()
+        public BookManager()
         {
             // extract book data from JSON file and store in books dictionary
             List<Book> books;
@@ -44,26 +44,26 @@ namespace ReadingList.Models
             neutralKeysEnumerator = neutralBooks.Keys.ToList();
         }
 
-        public static List<Book> GetNeutralBooks()
+        public List<Book> GetNeutralBooks()
         {
             if (neutralBooks == null) return null;
             return neutralBooks.Values.ToList();
         }
 
-        public static List<Book> GetShelvedBooks()
+        public List<Book> GetShelvedBooks()
         {
             if (shelvedBooks == null) return null;
             return shelvedBooks.Values.ToList();
         }
         
-        public static List<Book> GetRejectedBooks()
+        public List<Book> GetRejectedBooks()
         {
             if (rejectedBooks == null) return null;
             return rejectedBooks.Values.ToList();
         }
 
         // retrieve a random neutral book
-        public static Book GetNeutralBook()
+        public Book GetNeutralBook()
         {
             int count = neutralBooks.Count;
             if (count <= 0)
@@ -75,36 +75,37 @@ namespace ReadingList.Models
             return neutralBooks[neutralKeysEnumerator[bookIndex]];
         }
 
-        public static Book GetShelvedBook(long id)
+        public Book GetShelvedBook(long id)
         {
             return shelvedBooks[id];
         }
 
-        public static void AddShelvedBook(long id)
+        public void AddShelvedBook(long id)
         {
             shelvedBooks.Add(id, neutralBooks[id]);
             shelvedKeysEnumerator.Add(id);
         }
 
-        public static void AddRejectedBook(long id)
+        public void AddRejectedBook(long id)
         {
+            // DEMO: Data Bps - change rejectedBooks to shelvedBooks instead to see where shelvedBooks is changing
             rejectedBooks.Add(id, neutralBooks[id]);
             rejectedKeysEnumerator.Add(id);
         }
 
-        public static void AddNeutralBook(Book book)
+        public void AddNeutralBook(Book book)
         {
             neutralBooks.Add(book.Id, book);
             neutralKeysEnumerator.Add(book.Id);
         }
 
-        public static void RemoveNeutralBook(long id)
+        public void RemoveNeutralBook(long id)
         {
             neutralBooks.Remove(id);
             neutralKeysEnumerator.Remove(id);
         }
 
-        public static void RemoveShelvedBook(long id)
+        public void RemoveShelvedBook(long id)
         {
             Book book = GetShelvedBook(id);
             rejectedBooks.Add(id, book);
@@ -115,13 +116,13 @@ namespace ReadingList.Models
 
         }
 
-        public static void RemoveRejectedBook(long id)
+        public void RemoveRejectedBook(long id)
         {
             rejectedBooks.Remove(id);
             rejectedKeysEnumerator.Remove(id);
         }
 
-        public static void ResetAllBooks()
+        public void ResetAllBooks()
         {
             for (int i = 0; i < shelvedBooks.Count; i++)
             {
