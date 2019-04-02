@@ -15,7 +15,14 @@ namespace ReadingList.Models
         private Dictionary<long, Book> shelvedBooks = new Dictionary<long, Book>();
         private Dictionary<long, Book> rejectedBooks = new Dictionary<long, Book>();
 
-        private static string filePath = "App_Data/books.json";
+        private static string relativePath = "App_Data/books.json";
+
+        // Use when book info isn't available
+        private static string noImagePath = "App_Data/imageNotFound.png";
+
+        // DEMO: Snapshot debugger - Only use this for demo!
+        private static string absolutePath = "C:/Users/lerich/Documents/ReadingList/ReadingList/App_Data/books.json";
+
         private Random random = new Random();
 
         // store keys for each dictionary
@@ -27,7 +34,7 @@ namespace ReadingList.Models
         {
             // extract book data from JSON file and store in books dictionary
             List<Book> books;
-            using (StreamReader r = new StreamReader(filePath))
+            using (StreamReader r = new StreamReader(relativePath))
             {
                 string json = r.ReadToEnd();
                 books = JsonConvert.DeserializeObject<List<Book>>(json);

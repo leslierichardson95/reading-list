@@ -19,12 +19,12 @@ namespace ReadingList.Controllers
 
         public IActionResult Index()
         {
-            List<Book> shelvedBooks = bookManager.GetShelvedBooks();
+            List<Book> myShelf = bookManager.GetShelvedBooks();
 
-            ViewData["ShelvedBooks"] = shelvedBooks;
+            ViewData["ShelvedBooks"] = myShelf;
             ViewData["Title"] = "MyShelf";
 
-            return View(shelvedBooks);
+            return View(myShelf);
         }
 
         public IActionResult Book(long id)

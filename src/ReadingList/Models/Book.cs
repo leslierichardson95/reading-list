@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReadingList.Models
 {
+    [DebuggerDisplay("{Title}")]
     public class Book
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
