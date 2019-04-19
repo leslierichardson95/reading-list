@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReadingList.Models
 {
-    [DebuggerDisplay("{Title}")]
+    [DebuggerDisplay("{Title, nq}")]
     public class Book
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]

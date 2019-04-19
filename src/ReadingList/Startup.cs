@@ -56,13 +56,23 @@ namespace ReadingList
             app.UseRouting(routes =>
             {
                 routes.MapApplication();
-                routes.MapControllerRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapControllerRoute(
-                    name: "RateNextBook",
-                    template: "{controller=Home}/{action=StoreBook}/{currentBookId}/{isSaved}");
+                //routes.MapControllerRoute(
+                //    name: "StoreAll",
+                //    template: "{controller=Home}/{action=StoreAllBooks}/{areSaved}");
+
+                //routes.MapControllerRoute(
+                //    name: "RemoveBook",
+                //    template: "{controller=Home}/{action=RemoveBookFromShelf}/{id}");
+
+                //routes.MapControllerRoute(
+                //    name: "RateNextBook",
+                //    template: "{controller=Home}/{action=StoreBook}/{currentBookId}/{isSaved}");
+
+                //routes.MapControllerRoute(
+                //    name: "default",
+                //    template: "{controller=Home}/{action=Index}/{id?}");
+
             });
 
             app.UseCookiePolicy();

@@ -93,11 +93,35 @@ namespace ReadingList.Models
             shelvedKeysEnumerator.Add(id);
         }
 
+        public void AddAllToShelf()
+        {
+            for (int i = 0; i < neutralKeysEnumerator.Count; i++)
+            {
+                AddShelvedBook(neutralKeysEnumerator[i]);
+            }
+            //shelvedBooks = neutralBooks;
+            //shelvedKeysEnumerator = neutralKeysEnumerator;
+
+            neutralKeysEnumerator.Clear();
+            neutralBooks.Clear();
+        }
+
         public void AddRejectedBook(long id)
         {
             // DEMO: Data Bps - change rejectedBooks to shelvedBooks instead to see where shelvedBooks is changing
             rejectedBooks.Add(id, neutralBooks[id]);
             rejectedKeysEnumerator.Add(id);
+        }
+
+        public void AddAllToRejected()
+        {
+            for (int i = 0; i < neutralKeysEnumerator.Count; i++)
+            {
+                AddRejectedBook(neutralKeysEnumerator[i]);
+            }
+
+            neutralKeysEnumerator.Clear();
+            neutralBooks.Clear();
         }
 
         public void AddNeutralBook(Book book)
@@ -135,16 +159,26 @@ namespace ReadingList.Models
             {
                 Book book = shelvedBooks[shelvedKeysEnumerator[i]];
                 AddNeutralBook(book);
-                shelvedBooks.Remove(book.Id);
-                shelvedKeysEnumerator.Remove(book.Id);
+                //shelvedBooks.Remove(book.Id);
+                //shelvedKeysEnumerator.Remove(book.Id);
             }
+            shelvedBooks.Clear();
+            shelvedKeysEnumerator.Clear();
 
             for (int i = 0; i < rejectedBooks.Count; i++)
             {
                 Book book = rejectedBooks[rejectedKeysEnumerator[i]];
                 AddNeutralBook(book);
-                RemoveRejectedBook(book.Id);
+                //rejectedBooks.Remove(book.Id);
             }
+            rejectedBooks.Clear();
+            rejectedKeysEnumerator.Clear();
+        }
+
+        public bool neutralIsEmpty()
+        {
+            if (neutralBooks.Count == 0) return true;
+            else return false;
         }
 
         // convert book cover images into base 64

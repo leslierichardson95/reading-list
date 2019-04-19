@@ -17,6 +17,9 @@ namespace ReadingList.Controllers
             this.bookManager = bookManager;
         }
 
+        [Route("")]
+        [Route("Home")]
+        [Route("Home/Index")]
         public IActionResult Index()
         {
             List<Book> myShelf = bookManager.GetShelvedBooks();
@@ -27,6 +30,7 @@ namespace ReadingList.Controllers
             return View(myShelf);
         }
 
+        [Route("Home/Book")]
         public IActionResult Book(long id)
         {
             Book shelvedBook = bookManager.GetShelvedBook(id);
@@ -37,16 +41,25 @@ namespace ReadingList.Controllers
             return View(shelvedBook);
         }
 
+        [Route("Home/RateBooks")]
         public IActionResult RateBooks()
         {
-            Book neutralBook = bookManager.GetNeutralBook();
+            Book neutralBook = null;
+            if(!bookManager.neutralIsEmpty())
+            {
+                neutralBook = bookManager.GetNeutralBook();
+                ViewData["NeutralBook"] = neutralBook;
+                ViewData["Title"] = "RateBooks";
+                return View(neutralBook);
+            }
 
             ViewData["NeutralBook"] = neutralBook;
             ViewData["Title"] = "RateBooks";
 
-            return View(neutralBook);
+            return View();
         }
 
+        [Route("Home/StoreBook/{currentBookId}/{isSaved}")]
         public IActionResult StoreBook(long currentBookId, bool isSaved)
         {
             if (isSaved)
@@ -61,6 +74,21 @@ namespace ReadingList.Controllers
             return Redirect("/Home/RateBooks/");
         }
 
+        [Route("Home/StoreAllBooks/{areSaved}")]
+        public IActionResult StoreAllBooks(bool areSaved)
+        {
+            if (areSaved)
+            {
+                bookManager.AddAllToShelf();
+            }
+            else
+            {
+                bookManager.AddAllToRejected();
+            }
+            return Redirect("/Home/RateBooks/");
+        }
+
+        [Route("Home/RemoveBookFromShelf/{id}")]
         public IActionResult RemoveBookFromShelf(long id)
         {
             bookManager.RemoveShelvedBook(id);
@@ -68,12 +96,14 @@ namespace ReadingList.Controllers
         }
 
         // Remove all books from shelf and place all books back under neutral books
+        [Route("Home/ResetAllBooks")]
         public IActionResult ResetAllBooks()
         {
             bookManager.ResetAllBooks();
             return Redirect("/Home/RateBooks/");
         }
 
+        [Route("Home/Privacy")]
         public IActionResult Privacy()
         {
             return View();
