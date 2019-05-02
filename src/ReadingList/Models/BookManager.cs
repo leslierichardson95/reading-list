@@ -43,6 +43,7 @@ namespace ReadingList.Models
             for (int i = 0; i < books.Count; i++)
             {
                 books[i].Cover = GetBase64StringForImage(books[i].Cover);
+                books[i].TimesRead = 0;
             }
 
             // convert list of books to dictionary
@@ -84,7 +85,10 @@ namespace ReadingList.Models
 
         public Book GetShelvedBook(long id)
         {
-            return shelvedBooks[id];
+            Book shelvedBook = shelvedBooks[id];
+            // DEMO 2: Data breakpoints - add an extra TimesRead incrementation here
+            //shelvedBook.TimesRead++;
+            return shelvedBook;
         }
 
         public void AddShelvedBook(long id)
@@ -95,12 +99,14 @@ namespace ReadingList.Models
 
         public void AddAllToShelf()
         {
+            // DEMO 1: Tracepoints & Conditional BPs - replace neutralKeysEnumerator.Count with 
+            // neutralBooks.Count and uncomment neutralBooks.Remove(). To fix, make neutralBooks.Countloop 
+            // comparison, comment neutralBooks.Remove() and uncomment neutralBooks.Clear()
             for (int i = 0; i < neutralKeysEnumerator.Count; i++)
             {
                 AddShelvedBook(neutralKeysEnumerator[i]);
+                //neutralBooks.Remove(neutralKeysEnumerator[i]);
             }
-            //shelvedBooks = neutralBooks;
-            //shelvedKeysEnumerator = neutralKeysEnumerator;
 
             neutralKeysEnumerator.Clear();
             neutralBooks.Clear();
@@ -175,16 +181,37 @@ namespace ReadingList.Models
             rejectedKeysEnumerator.Clear();
         }
 
-        public bool neutralIsEmpty()
+        public void FinishedBook(int id)
+        {
+            Book book = GetShelvedBook(id);
+            book.TimesRead++;
+            book.LastReadDate = DateTime.Now;
+        }
+
+        public bool NeutralIsEmpty()
         {
             if (neutralBooks.Count == 0) return true;
             else return false;
         }
 
-        // convert book cover images into base 64
-        public static string GetBase64StringForImage(string imgPath)
+        public string FinishedToString(string person, Book book)
         {
-            byte[] imageBytes = System.IO.File.ReadAllBytes(imgPath);
+            return person + " " + book.FinishedBookString();
+        }
+
+        // convert book cover images into base 64
+        public string GetBase64StringForImage(string imgPath)
+        {
+            byte[] imageBytes;
+            try
+            {
+                imageBytes = System.IO.File.ReadAllBytes(imgPath);
+            }
+            catch(Exception e)
+            {
+                imageBytes = System.IO.File.ReadAllBytes(noImagePath);
+
+            }
             string base64String = Convert.ToBase64String(imageBytes);
             return base64String;
         }

@@ -5,7 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>My Shelved Book</h1>
+<div class="book text-center">
+    <h1 class="display-4">My Shelved Book</h1>
+</div>
 
 <div class="book text-center">
     <div class="row">
@@ -15,7 +17,17 @@
             <div class="book-header__byline">By @Model.Author</div>
             <div class="book-header__servings">Year Published: @Model.Year</div>
             <div class="book-header__time"> @Model.Pages pages</div>
-            <a href="/Home/RemoveBookFromShelf/@Model.Id"><button class="btn btn-danger btn-lg">Remove Book From My Shelf</button></a>
+            <div class="book-header__timesRead"> Read @Model.TimesRead times</div>
+            @if (@Model.TimesRead > 0)
+            {
+                <div class="book-header__TimeFinished"><i>@ViewBag.TimeFinished</i></div>
+            }
+            <div class="btn-toolbar" role="toolbar" style="padding-top:20px">
+                <a href="/Home/FinishedBook/@Model.Id"><button class="btn btn-success btn-lg" style="width:250px" onclick="RateNextBook">I Finished This Book!</button></a>
+                <div style="display:inline-block; width:20px"></div>
+                <a href="/Home/RemoveBookFromShelf/@Model.Id"><button class="btn btn-danger btn-lg">Remove Book From My Shelf</button></a>
+            </div>
+            
         </div>
     </div>
 </div>

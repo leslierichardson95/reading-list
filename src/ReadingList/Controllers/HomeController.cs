@@ -35,6 +35,13 @@ namespace ReadingList.Controllers
         {
             Book shelvedBook = bookManager.GetShelvedBook(id);
 
+            // if book has been read, get string stating when it was last finished
+            if (shelvedBook.TimesRead > 0)
+            {
+                // DEMO 3: ReturnValue, Step Into Specific, Format Specifier dropdown
+                ViewBag.TimeFinished = bookManager.FinishedToString(Person.ToString("Leslie"), shelvedBook);
+            }
+
             ViewData["ShelvedBook"] = shelvedBook;
             ViewData["Title"] = "My Shelved Book";
 
@@ -45,11 +52,13 @@ namespace ReadingList.Controllers
         public IActionResult RateBooks()
         {
             Book neutralBook = null;
-            if(!bookManager.neutralIsEmpty())
+            if(!bookManager.NeutralIsEmpty())
             {
                 neutralBook = bookManager.GetNeutralBook();
+
                 ViewData["NeutralBook"] = neutralBook;
                 ViewData["Title"] = "RateBooks";
+
                 return View(neutralBook);
             }
 
@@ -80,6 +89,7 @@ namespace ReadingList.Controllers
             if (areSaved)
             {
                 bookManager.AddAllToShelf();
+                return Redirect("/Home/Index");
             }
             else
             {
@@ -101,6 +111,13 @@ namespace ReadingList.Controllers
         {
             bookManager.ResetAllBooks();
             return Redirect("/Home/RateBooks/");
+        }
+
+        [Route("Home/FinishedBook/{id}")]
+        public IActionResult FinishedBook(int id)
+        {
+            bookManager.FinishedBook(id);
+            return Redirect("/Home/Index");
         }
 
         [Route("Home/Privacy")]
