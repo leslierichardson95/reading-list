@@ -87,7 +87,7 @@ namespace ReadingList.Models
         {
             Book shelvedBook = shelvedBooks[id];
             // DEMO 2: Data breakpoints - add an extra TimesRead incrementation here
-            //shelvedBook.TimesRead++;
+            shelvedBook.TimesRead++;
             return shelvedBook;
         }
 
@@ -102,14 +102,14 @@ namespace ReadingList.Models
             // DEMO 1: Tracepoints & Conditional BPs - replace neutralKeysEnumerator.Count with 
             // neutralBooks.Count and uncomment neutralBooks.Remove(). To fix, make neutralBooks.Countloop 
             // comparison, comment neutralBooks.Remove() and uncomment neutralBooks.Clear()
-            for (int i = 0; i < neutralKeysEnumerator.Count; i++)
+            for (int i = 0; i < neutralBooks.Count; i++)
             {
                 AddShelvedBook(neutralKeysEnumerator[i]);
-                //neutralBooks.Remove(neutralKeysEnumerator[i]);
+                neutralBooks.Remove(neutralKeysEnumerator[i]);
             }
 
             neutralKeysEnumerator.Clear();
-            neutralBooks.Clear();
+            //neutralBooks.Clear();
         }
 
         public void AddRejectedBook(long id)
