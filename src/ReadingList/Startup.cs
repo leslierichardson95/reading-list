@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using ReadingList.Models;
 
 namespace ReadingList
 {
@@ -31,9 +33,14 @@ namespace ReadingList
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //services.AddDbContext<BookContext>(opt =>
+            //    opt.UseInMemoryDatabase("BookList"));
+
             services.AddSingleton<Models.BookManager, Models.BookManager>();
 
-            services.AddMvc();
+            // services.AddMvc();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,26 +60,15 @@ namespace ReadingList
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting(routes =>
-            {
-                routes.MapApplication();
+            app.UseRouting();
 
-                //routes.MapControllerRoute(
-                //    name: "StoreAll",
-                //    template: "{controller=Home}/{action=StoreAllBooks}/{areSaved}");
+            app.UseAuthentication();
 
-                //routes.MapControllerRoute(
-                //    name: "RemoveBook",
-                //    template: "{controller=Home}/{action=RemoveBookFromShelf}/{id}");
-
-                //routes.MapControllerRoute(
-                //    name: "RateNextBook",
-                //    template: "{controller=Home}/{action=StoreBook}/{currentBookId}/{isSaved}");
-
-                //routes.MapControllerRoute(
-                //    name: "default",
-                //    template: "{controller=Home}/{action=Index}/{id?}");
-
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             app.UseCookiePolicy();
