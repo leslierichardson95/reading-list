@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReadingList.Models;
@@ -10,19 +11,22 @@ namespace ReadingList.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly BookManager bookManager;
+        //private readonly BookManager bookManager;
+        private HttpHelper httpHelper;
 
-        public HomeController(BookManager bookManager)
+        public HomeController()
         {
-            this.bookManager = bookManager;
+            //this.bookManager = bookManager;
+            httpHelper = new HttpHelper("https://localhost:44390/");
         }
 
         [Route("")]
         [Route("Home")]
         [Route("Home/Index")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Book> myShelf = bookManager.GetShelvedBooks();
+            List<Book> myShelf = await httpHelper.GetAsync<List<Book>>("api/books/shelvedBooks");
+            //List<Book> myShelf = bookManager.GetShelvedBooks();
 
             ViewData["ShelvedBooks"] = myShelf;
             ViewData["Title"] = "MyShelf";
@@ -31,15 +35,16 @@ namespace ReadingList.Controllers
         }
 
         [Route("Home/Book")]
-        public IActionResult Book(long id)
+        public async Task<IActionResult> BookAsync(long id)
         {
-            Book shelvedBook = bookManager.GetShelvedBook(id);
+            //Book shelvedBook = bookManager.GetShelvedBook(id);
+            Book shelvedBook = await httpHelper.GetAsync<Book>($"api/books/shelvedBook/{id}");
 
             // if book has been read, get string stating when it was last finished
             if (shelvedBook.TimesRead > 0)
             {
                 // DEMO 3: ReturnValue, Step Into Specific, Format Specifier dropdown
-                ViewBag.TimeFinished = bookManager.FinishedToString(Person.ToString("Leslie"), shelvedBook);
+                ViewBag.TimeFinished = await httpHelper.GetAsStringAsync($"api/books/finishedToString/{Person.ToString("Leslie")}/{id}");
             }
 
             ViewData["ShelvedBook"] = shelvedBook;
@@ -49,12 +54,14 @@ namespace ReadingList.Controllers
         }
 
         [Route("Home/RateBooks")]
-        public IActionResult RateBooks()
+        public async Task<IActionResult> RateBooks()
         {
             Book neutralBook = null;
-            if(!bookManager.NeutralIsEmpty())
+            bool neutralIsEmpty = await httpHelper.GetAsync<bool>("api/books/neutralIsEmpty");
+            if(!neutralIsEmpty)
             {
-                neutralBook = bookManager.GetNeutralBook();
+                //neutralBook = bookManager.GetNeutralBook();
+                neutralBook = await httpHelper.GetAsync<Book>("api/books/neutralBook");
 
                 ViewData["NeutralBook"] = neutralBook;
                 ViewData["Title"] = "RateBooks";
@@ -69,54 +76,63 @@ namespace ReadingList.Controllers
         }
 
         [Route("Home/StoreBook/{currentBookId}/{isSaved}")]
-        public IActionResult StoreBook(long currentBookId, bool isSaved)
+        public async Task<IActionResult> StoreBookAsync(long currentBookId, bool isSaved)
         {
             if (isSaved)
             {
-                bookManager.AddShelvedBook(currentBookId);
+                //bookManager.AddShelvedBook(currentBookId);
+                await httpHelper.PutAsync($"api/books/addShelved/{currentBookId}", currentBookId);
             }
             else
             {
-                bookManager.AddRejectedBook(currentBookId);
+                //bookManager.AddRejectedBook(currentBookId);
+                await httpHelper.PutAsync($"api/books/addRejected/{currentBookId}", currentBookId);
             }
-            bookManager.RemoveNeutralBook(currentBookId);
+            //bookManager.RemoveNeutralBook(currentBookId);
+            await httpHelper.PutAsync($"api/books/removeNeutral/{currentBookId}", currentBookId);
+
             return Redirect("/Home/RateBooks/");
         }
 
         [Route("Home/StoreAllBooks/{areSaved}")]
-        public IActionResult StoreAllBooks(bool areSaved)
+        public async Task<IActionResult> StoreAllBooksAsync(bool areSaved)
         {
             if (areSaved)
             {
-                bookManager.AddAllToShelf();
+                //bookManager.AddAllToShelf();
+                await httpHelper.PutAsync("api/books/addAll", 1);
                 return Redirect("/Home/Index");
             }
             else
             {
-                bookManager.AddAllToRejected();
+                //bookManager.AddAllToRejected();
+                await httpHelper.PutAsync("api/books/rejectAll", 1);             
             }
             return Redirect("/Home/RateBooks/");
         }
 
         [Route("Home/RemoveBookFromShelf/{id}")]
-        public IActionResult RemoveBookFromShelf(long id)
+        public async Task<IActionResult> RemoveBookFromShelfAsync(long id)
         {
-            bookManager.RemoveShelvedBook(id);
+            //bookManager.RemoveShelvedBook(id);
+            await httpHelper.PutAsync($"api/books/removeShelved/{id}", id);
             return Redirect("/Home/Index");
         }
 
         // Remove all books from shelf and place all books back under neutral books
         [Route("Home/ResetAllBooks")]
-        public IActionResult ResetAllBooks()
+        public async Task<IActionResult> ResetAllBooksAsync()
         {
-            bookManager.ResetAllBooks();
+            //bookManager.ResetAllBooks();
+            await httpHelper.PutAsync("api/books/resetAll", 1);
             return Redirect("/Home/RateBooks/");
         }
 
         [Route("Home/FinishedBook/{id}")]
-        public IActionResult FinishedBook(int id)
+        public async Task<IActionResult> FinishedBookAsync(int id)
         {
-            bookManager.FinishedBook(id);
+            //bookManager.FinishedBook(id);
+            await httpHelper.PutAsync($"api/books/finishedBook/{id}", id);
             return Redirect("/Home/Index");
         }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -53,31 +54,41 @@ namespace ReadingList
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting(routes =>
-            {
-                routes.MapApplication();
+            //app.UseRouting(routes =>
+            //{
+            //    routes.MapApplication();
 
-                //routes.MapControllerRoute(
-                //    name: "StoreAll",
-                //    template: "{controller=Home}/{action=StoreAllBooks}/{areSaved}");
+            //    //routes.MapControllerRoute(
+            //    //    name: "StoreAll",
+            //    //    template: "{controller=Home}/{action=StoreAllBooks}/{areSaved}");
 
-                //routes.MapControllerRoute(
-                //    name: "RemoveBook",
-                //    template: "{controller=Home}/{action=RemoveBookFromShelf}/{id}");
+            //    //routes.MapControllerRoute(
+            //    //    name: "RemoveBook",
+            //    //    template: "{controller=Home}/{action=RemoveBookFromShelf}/{id}");
 
-                //routes.MapControllerRoute(
-                //    name: "RateNextBook",
-                //    template: "{controller=Home}/{action=StoreBook}/{currentBookId}/{isSaved}");
+            //    //routes.MapControllerRoute(
+            //    //    name: "RateNextBook",
+            //    //    template: "{controller=Home}/{action=StoreBook}/{currentBookId}/{isSaved}");
 
-                //routes.MapControllerRoute(
-                //    name: "default",
-                //    template: "{controller=Home}/{action=Index}/{id?}");
+            //    //routes.MapControllerRoute(
+            //    //    name: "default",
+            //    //    template: "{controller=Home}/{action=Index}/{id?}");
+            //    //routes.MapRazorPages();
 
-            });
+            //});
+            app.UseRouting();
 
             app.UseCookiePolicy();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

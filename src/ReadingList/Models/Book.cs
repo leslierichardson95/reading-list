@@ -38,6 +38,9 @@ namespace ReadingList.Models
         [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
 
+        [JsonProperty("rating", NullValueHandling = NullValueHandling.Ignore)]
+        public int Rating { get; set; }
+
         public int TimesRead { get; set; }
 
         public DateTime LastReadDate { get; set; }

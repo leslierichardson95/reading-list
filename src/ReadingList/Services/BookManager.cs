@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,13 @@ namespace ReadingList.Models
 {
     public class BookManager
     {
+        public static BookManager Singleton;
+
+        static BookManager()
+        {
+            Singleton = new BookManager();
+        }
+
         // stores list of all books by their id
         private Dictionary<long, Book> neutralBooks = new Dictionary<long, Book>();
         private Dictionary<long, Book> shelvedBooks = new Dictionary<long, Book>();
@@ -42,7 +50,12 @@ namespace ReadingList.Models
 
             for (int i = 0; i < books.Count; i++)
             {
-                books[i].Cover = GetBase64StringForImage(books[i].Cover);
+                //books[i].Cover = GetBase64StringForImage(books[i].Cover);
+                //byte[] imageBytes = System.IO.File.ReadAllBytes(noImagePath);
+                //books[i].Cover = Convert.ToBase64String(imageBytes);
+                //books[i].Cover = noImagePath;
+                //books[i].Cover = GetBase64StringForImage(books[i].Cover);
+                books[i].Cover = "https://raw.githubusercontent.com/leslierichardson95/reading-list/master/src/ReadingList/" + books[i].Cover;
                 books[i].TimesRead = 0;
             }
 
@@ -52,18 +65,21 @@ namespace ReadingList.Models
             neutralKeysEnumerator = neutralBooks.Keys.ToList();
         }
 
+        // Get all books haven't been rated
         public List<Book> GetNeutralBooks()
         {
             if (neutralBooks == null) return null;
             return neutralBooks.Values.ToList();
         }
 
+        // Get all books currently on my shelf
         public List<Book> GetShelvedBooks()
         {
             if (shelvedBooks == null) return null;
             return shelvedBooks.Values.ToList();
         }
         
+        // Get all books that have been rejected or removed from my shelf
         public List<Book> GetRejectedBooks()
         {
             if (rejectedBooks == null) return null;
@@ -194,8 +210,9 @@ namespace ReadingList.Models
             else return false;
         }
 
-        public string FinishedToString(string person, Book book)
+        public string FinishedToString(string person, long id)
         {
+            Book book = GetShelvedBook(id);
             return person + " " + book.FinishedBookString();
         }
 
