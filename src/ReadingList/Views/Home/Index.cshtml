@@ -17,11 +17,12 @@
             <div class="container">
                 <div class="row">
                     @foreach (Book book in ViewData["ShelvedBooks"] as List<Book>)
-                    {
+                            {
+                                var cover = book.Cover;
                         <a asp-action="Book" asp-route-id="@book.Id">
                             <div class="col-md-4 centered" style="text-align:center">
                                 <div class="card mb-4 box-shadow" style="width:200px; height:auto">
-                                    <img class="img-fluid img-thumbnail" src="@book.Cover"
+                                    <img class="img-fluid img-thumbnail" src="@Url.Content(book.Cover)"
                                          alt="Image of @book.Title">
                                 </div>
                             </div>

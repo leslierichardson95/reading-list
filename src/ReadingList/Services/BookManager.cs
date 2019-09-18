@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Policy;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ReadingList.Models
@@ -46,17 +49,6 @@ namespace ReadingList.Models
             {
                 string json = r.ReadToEnd();
                 books = JsonConvert.DeserializeObject<List<Book>>(json);
-            }
-
-            for (int i = 0; i < books.Count; i++)
-            {
-                //books[i].Cover = GetBase64StringForImage(books[i].Cover);
-                //byte[] imageBytes = System.IO.File.ReadAllBytes(noImagePath);
-                //books[i].Cover = Convert.ToBase64String(imageBytes);
-                //books[i].Cover = noImagePath;
-                //books[i].Cover = GetBase64StringForImage(books[i].Cover);
-                books[i].Cover = "https://raw.githubusercontent.com/leslierichardson95/reading-list/master/src/ReadingList/" + books[i].Cover;
-                books[i].TimesRead = 0;
             }
 
             // convert list of books to dictionary
@@ -121,11 +113,11 @@ namespace ReadingList.Models
             for (int i = 0; i < neutralBooks.Count; i++)
             {
                 AddShelvedBook(neutralKeysEnumerator[i]);
-                neutralBooks.Remove(neutralKeysEnumerator[i]);
+                //neutralBooks.Remove(neutralKeysEnumerator[i]);
             }
 
             neutralKeysEnumerator.Clear();
-            //neutralBooks.Clear();
+            neutralBooks.Clear();
         }
 
         public void AddRejectedBook(long id)
@@ -214,6 +206,21 @@ namespace ReadingList.Models
         {
             Book book = GetShelvedBook(id);
             return person + " " + book.FinishedBookString();
+        }
+
+        public void UpdateBooks(IEnumerable<Book> books)
+        {
+            using (var outputStream = File.OpenWrite(relativePath))
+            {
+                System.Text.Json.JsonSerializer.Serialize<IEnumerable<Book>>(
+                    new Utf8JsonWriter(outputStream, new JsonWriterOptions
+                    {
+                        SkipValidation = true,
+                        Indented = true
+                    }),
+                    books
+                );
+            }
         }
 
         // convert book cover images into base 64

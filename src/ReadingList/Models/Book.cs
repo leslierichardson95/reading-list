@@ -26,7 +26,7 @@ namespace ReadingList.Models
         [JsonProperty("year", NullValueHandling = NullValueHandling.Ignore)]
         public int Year { get; set; }
 
-        [JsonProperty("imageLink", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("cover", NullValueHandling = NullValueHandling.Ignore)]
         public string Cover { get; set; }
 
         [JsonProperty("link", NullValueHandling = NullValueHandling.Ignore)]
