@@ -95,7 +95,7 @@ namespace ReadingList.Models
         {
             Book shelvedBook = shelvedBooks[id];
             // DEMO 2: Data breakpoints - add an extra TimesRead incrementation here
-            shelvedBook.TimesRead++;
+            //shelvedBook.TimesRead++;
             return shelvedBook;
         }
 
@@ -192,6 +192,7 @@ namespace ReadingList.Models
         public void FinishedBook(int id)
         {
             Book book = GetShelvedBook(id);
+            // DEMO 4: Async Exception triggered when TimesRead is decremented instead of being incremented
             book.TimesRead++;
             book.LastReadDate = DateTime.Now;
         }

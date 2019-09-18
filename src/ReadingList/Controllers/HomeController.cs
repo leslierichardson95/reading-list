@@ -40,11 +40,18 @@ namespace ReadingList.Controllers
             //Book shelvedBook = bookManager.GetShelvedBook(id);
             Book shelvedBook = await httpHelper.GetAsync<Book>($"api/books/shelvedBook/{id}");
 
+            int timesRead = shelvedBook.TimesRead;
+
             // if book has been read, get string stating when it was last finished
-            if (shelvedBook.TimesRead > 0)
+            if (timesRead > 0)
             {
                 // DEMO 3: ReturnValue, Step Into Specific, Format Specifier dropdown
                 ViewBag.TimeFinished = await httpHelper.GetAsStringAsync($"api/books/finishedToString/{Person.ToString("Leslie")}/{id}");
+            }
+            else if (timesRead < 0)
+            {   
+                // DEMO 4: Async Exceptions
+                throw new ArgumentOutOfRangeException($"You can't read a book {timesRead} times!");
             }
 
             ViewData["ShelvedBook"] = shelvedBook;
