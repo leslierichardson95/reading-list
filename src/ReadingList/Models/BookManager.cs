@@ -87,7 +87,7 @@ namespace ReadingList.Models
         {
             Book shelvedBook = shelvedBooks[id];
             // DEMO 2: Data breakpoints - add an extra TimesRead incrementation here
-            shelvedBook.TimesRead++;
+            //shelvedBook.TimesRead++;
             return shelvedBook;
         }
 

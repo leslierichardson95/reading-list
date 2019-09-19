@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ReadingList.Models
 {
     // DEMO 0: DebuggerDisplay
-    [DebuggerDisplay("{Language} {Author}")]
+    [DebuggerDisplay("{Title}")]
     public class Book
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
@@ -46,7 +46,7 @@ namespace ReadingList.Models
         {
             // DEMO 3: ReturnValue, Step Into Specific, Format Spec - Add ToShortDateString() to LastReadDate; 
             // Remove ToShortDateString() to include the time book was finished
-            return "last finished " + this.Title + " on " + LastReadDate.ToShortDateString();
+            return "last finished " + this.Title + " on " + LastReadDate;
         }
     }
 }
