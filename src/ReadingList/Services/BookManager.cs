@@ -193,7 +193,7 @@ namespace ReadingList.Models
         {
             Book book = GetShelvedBook(id);
             // DEMO 4: Async Exception triggered when TimesRead is decremented instead of being incremented
-            book.TimesRead++;
+            book.TimesRead--;
             book.LastReadDate = DateTime.Now;
         }
 
