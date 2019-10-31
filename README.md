@@ -36,6 +36,7 @@ The following list contains debugging tools and corresponding documentation/blog
 * [Pseudovariables](https://docs.microsoft.com/en-us/visualstudio/debugger/pseudovariables?view=vs-2019)
 * [C# Format Specifiers](https://docs.microsoft.com/en-us/visualstudio/debugger/format-specifiers-in-csharp?view=vs-2019)
 * [C++ Format Specifiers](https://docs.microsoft.com/en-us/visualstudio/debugger/format-specifiers-in-cpp?view=vs-2019)
+* [Edit and Continue](https://docs.microsoft.com/en-us/visualstudio/debugger/edit-and-continue?view=vs-2019)
 * [Diagnostics Tools Window](https://docs.microsoft.com/en-us/visualstudio/profiling/running-profiling-tools-with-or-without-the-debugger?view=vs-2019#BKMK_Quick_start__Collect_diagnostic_data)
 * [Snapshots on Exceptions](https://devblogs.microsoft.com/visualstudio/snapshots-on-exceptions-while-debugging-with-intellitrace/)
 * [First-Chance Exceptions](https://docs.microsoft.com/en-us/visualstudio/debugger/managing-exceptions-with-the-debugger?view=vs-2019#tell-the-debugger-to-break-when-an-exception-is-thrown)
