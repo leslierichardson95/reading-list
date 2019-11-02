@@ -18,10 +18,11 @@ namespace ReadingList.Models
         private static string relativePath = "App_Data/books.json";
 
         // Use when book info isn't available
-        private static string noImagePath = "App_Data/imageNotFound.png";
+        private static string noImagePath = "imageNotFound.png";
 
-        // DEMO: Snapshot debugger - Only use this for demo!
-        private static string absolutePath = "C:/Users/lerich/Documents/ReadingList/ReadingList/App_Data/books.json";
+        // DEMO: Snapshot debugger - Only use these two lines for demo!
+        private static string absolutePathStr = "C:/Users/lerich/Documents/reading-list/src/ReadingList/App_Data/books.json";
+        private string absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, absolutePathStr);
 
         private Random random = new Random();
 
@@ -34,20 +35,28 @@ namespace ReadingList.Models
         {
             // extract book data from JSON file and store in books dictionary
             List<Book> books;
-            using (StreamReader r = new StreamReader(relativePath))
-            {
-                string json = r.ReadToEnd();
-                books = JsonConvert.DeserializeObject<List<Book>>(json);
-            }
 
-            for (int i = 0; i < books.Count; i++)
+            try
             {
-                books[i].Cover = GetBase64StringForImage(books[i].Cover);
-                books[i].TimesRead = 0;
-            }
+                using (StreamReader r = new StreamReader(absolutePath))
+                {
+                    string json = r.ReadToEnd();
+                    books = JsonConvert.DeserializeObject<List<Book>>(json);
+                }
 
-            // convert list of books to dictionary
-            neutralBooks = books.ToDictionary(x => x.Id, x => x);
+                for (int i = 0; i < books.Count; i++)
+                {
+                    books[i].Cover = GetBase64StringForImage(books[i].Cover);
+                    books[i].TimesRead = 0;
+                }
+
+                // convert list of books to dictionary
+                neutralBooks = books.ToDictionary(x => x.Id, x => x);
+            }
+            catch (Exception)
+            {
+                neutralBooks[0] = getBookPlaceholder(0);
+            }
 
             neutralKeysEnumerator = neutralBooks.Keys.ToList();
         }
@@ -197,6 +206,21 @@ namespace ReadingList.Models
         public string FinishedToString(string person, Book book)
         {
             return person + " " + book.FinishedBookString();
+        }
+
+        // return generic book info if book is not found
+        public Book getBookPlaceholder(int id)
+        {
+            Book book = new Book();
+            book.Id = id;
+            book.Author = "NO AUTHOR";
+            book.Language = "English";
+            book.Link = "";
+            book.Pages = "0";
+            book.Title = "NO TITLE";
+            book.Year = 3000;
+            book.Cover = GetBase64StringForImage(noImagePath);
+            return book;
         }
 
         // convert book cover images into base 64
