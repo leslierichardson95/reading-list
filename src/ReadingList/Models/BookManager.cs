@@ -38,7 +38,7 @@ namespace ReadingList.Models
 
             try
             {
-                using (StreamReader r = new StreamReader(absolutePath))
+                using (StreamReader r = new StreamReader(relativePath))
                 {
                     string json = r.ReadToEnd();
                     books = JsonConvert.DeserializeObject<List<Book>>(json);
@@ -46,7 +46,7 @@ namespace ReadingList.Models
 
                 for (int i = 0; i < books.Count; i++)
                 {
-                    books[i].Cover = GetBase64StringForImage(books[i].Cover);
+                    //books[i].Cover = GetBase64StringForImage(books[i].Cover);
                     books[i].TimesRead = 0;
                 }
 
