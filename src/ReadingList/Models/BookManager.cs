@@ -170,24 +170,37 @@ namespace ReadingList.Models
 
         public void ResetAllBooks()
         {
-            for (int i = 0; i < shelvedBooks.Count; i++)
-            {
-                Book book = shelvedBooks[shelvedKeysEnumerator[i]];
-                AddNeutralBook(book);
-                //shelvedBooks.Remove(book.Id);
-                //shelvedKeysEnumerator.Remove(book.Id);
-            }
             shelvedBooks.Clear();
             shelvedKeysEnumerator.Clear();
 
-            for (int i = 0; i < rejectedBooks.Count; i++)
-            {
-                Book book = rejectedBooks[rejectedKeysEnumerator[i]];
-                AddNeutralBook(book);
-                //rejectedBooks.Remove(book.Id);
-            }
             rejectedBooks.Clear();
             rejectedKeysEnumerator.Clear();
+
+            List<Book> books;
+
+            try
+            {
+                using (StreamReader r = new StreamReader(absolutePath))
+                {
+                    string json = r.ReadToEnd();
+                    books = JsonConvert.DeserializeObject<List<Book>>(json);
+                }
+
+                for (int i = 0; i < books.Count; i++)
+                {
+                    //books[i].Cover = GetBase64StringForImage(books[i].Cover);
+                    books[i].TimesRead = 0;
+                }
+
+                // convert list of books to dictionary
+                neutralBooks = books.ToDictionary(x => x.Id, x => x);
+            }
+            catch (Exception)
+            {
+                neutralBooks[0] = getBookPlaceholder(0);
+            }
+
+            neutralKeysEnumerator = neutralBooks.Keys.ToList();
         }
 
         public void FinishedBook(int id)
