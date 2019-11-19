@@ -68,6 +68,13 @@ namespace ReadingList.Controllers
             return View();
         }
 
+        [Route("Home/CreateBook")]
+        public IActionResult CreateBook()
+        {
+            ViewData["Title"] = "CreateBook";
+            return View();
+        }
+
         [Route("Home/StoreBook/{currentBookId}/{isSaved}")]
         public IActionResult StoreBook(long currentBookId, bool isSaved)
         {
@@ -111,6 +118,12 @@ namespace ReadingList.Controllers
         {
             bookManager.ResetAllBooks();
             return Redirect("/Home/RateBooks/");
+        }
+
+        public IActionResult CreateNewBook(Book book)
+        {
+            bookManager.CreateBook(book);
+            return Redirect("/Home/CreateBook");
         }
 
         [Route("Home/FinishedBook/{id}")]

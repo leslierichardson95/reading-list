@@ -1,0 +1,62 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "CreateBook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Horizontal Form -->
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Create New Book</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form class="form-horizontal" method="post" action="CreateNewBook">
+        <div class="box-body">
+            <div class="form-group">
+                <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Title" placeholder="Title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAuthor" class="col-sm-2 control-label">Author</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Author" placeholder="Author">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPages" class="col-sm-2 control-label">Pages</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Pages" placeholder="Pages">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputYear" class="col-sm-2 control-label">Year Released</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Year" placeholder="Year">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputLanguage" class="col-sm-2 control-label">Language of Origin</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Language" placeholder="Language">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputCountry" class="col-sm-2 control-label">Country of Origin</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="Country" placeholder="Country">
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-info pull-right">Create</button>
+            <button type="submit" class="btn btn-default">Cancel</button>
+        </div>
+        <!-- /.box-footer -->
+    </form>
+</div>
+<!-- /.box -->

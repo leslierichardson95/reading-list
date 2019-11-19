@@ -23,6 +23,8 @@ namespace ReadingList.Models
         // DEMO: Snapshot debugger - Only use this for demo!
         private static string absolutePath = "C:/Users/lerich/Documents/ReadingList/ReadingList/App_Data/books.json";
 
+        private static int totalBooks = 100;
+
         private Random random = new Random();
 
         // store keys for each dictionary
@@ -44,6 +46,18 @@ namespace ReadingList.Models
             {
                 books[i].Cover = GetBase64StringForImage(books[i].Cover);
                 books[i].TimesRead = 0;
+            }
+
+            // Make 5000 placeholder books to mess up perf when creating a new book
+            for (int i = 0; i < 5000; i++)
+            {
+                Book book = new Book();
+                book.Id = ++totalBooks;
+                book.Title = "Book" + i;
+                book.Author = "Unknown";
+                book.TimesRead = 0;
+
+                books.Add(book);
             }
 
             // convert list of books to dictionary
@@ -105,11 +119,11 @@ namespace ReadingList.Models
             for (int i = 0; i < neutralBooks.Count; i++)
             {
                 AddShelvedBook(neutralKeysEnumerator[i]);
-                neutralBooks.Remove(neutralKeysEnumerator[i]);
+                //neutralBooks.Remove(neutralKeysEnumerator[i]);
             }
 
             neutralKeysEnumerator.Clear();
-            //neutralBooks.Clear();
+            neutralBooks.Clear();
         }
 
         public void AddRejectedBook(long id)
@@ -180,6 +194,61 @@ namespace ReadingList.Models
             rejectedBooks.Clear();
             rejectedKeysEnumerator.Clear();
         }
+        
+        // Add new book to neutral books list for Rate Books page
+        public bool CreateBook(Book book)
+        {
+            if (ValidateBook(book) == true)
+            {
+                // Set default book properties and add book to neutralbooks list
+                book.TimesRead = 0;
+                book.Id = ++totalBooks;
+
+                AddNeutralBook(book);
+
+                return true;
+            }
+            return false;
+        }
+
+        // Check that the newly created book does not already exist
+        public bool ValidateBook(Book book)
+        {
+            // Check if book already exists
+
+            // DEMO: Profiling - Using unnecessary for loop over Dictionary perks to examine
+            // high CPU usage. Improve perf by searching for duplicates via 
+            // neutralBooks.ContainsValue()
+            for (int i = 1; i <= neutralBooks.Count; i++)
+            {
+                for (int j = 1; j <= neutralBooks.Count; j++)
+                {
+                    if (neutralBooks[j].Author.Equals(book.Author))
+                    {
+                        return false;
+                    }
+                }
+                if (neutralBooks[i].Title.Equals(book.Title))
+                {
+                    return false;
+                }
+            }
+            for (int i = 1; i <= shelvedBooks.Count; i++)
+            {
+                if (shelvedBooks[i].Title.Equals(book.Title))
+                {
+                    return false;
+                }
+            }
+            for (int i = 1; i <= rejectedBooks.Count; i++)
+            {
+                if (rejectedBooks[i].Title.Equals(book.Title))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         public void FinishedBook(int id)
         {
@@ -207,7 +276,7 @@ namespace ReadingList.Models
             {
                 imageBytes = System.IO.File.ReadAllBytes(imgPath);
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 imageBytes = System.IO.File.ReadAllBytes(noImagePath);
 
