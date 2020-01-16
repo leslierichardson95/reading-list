@@ -41,3 +41,9 @@ Learn more about the Visual Studio debugger and its features at [aka.ms/debugger
 * [Child Process Debugging Power Tool](https://marketplace.visualstudio.com/items?itemName=vsdbgplat.MicrosoftChildProcessDebuggingPowerTool)
 * [Snapshot Debugger](https://devblogs.microsoft.com/visualstudio/snapshot-debugging-with-visual-studio-2017-now-ready-for-production/)
 * [Time-Travel Debugging](https://devblogs.microsoft.com/visualstudio/introducing-time-travel-debugging-for-visual-studio-enterprise-2019/)
+
+## Debugger videos using this demo app
+* [Ignite 2019 Breakout Session - Debugging Tips & Tricks](https://myignite.techcommunity.microsoft.com/sessions/81610?source=sessions)
+* [VS Toolbox Debugging Tips & Tricks Part 1](https://www.youtube.com/watch?v=Uld-2m2tGiI&t) & [Part 2](https://www.youtube.com/watch?v=kQHbGPF7TZQ&t)
+* [Tips & Tricks for .NET Debugging in Visual Studio](https://www.youtube.com/watch?v=lgKInHJ-tcg&t)
+* [Microsoft Build 2019 Breakout Session - Debugging Tips & Tricks](https://www.youtube.com/watch?v=i6gdmT-BdOU&t)
