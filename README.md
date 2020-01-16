@@ -11,7 +11,7 @@ To turn on bugs, locate comments containing "DEMO," where the bug will be commen
 2. Type **"DEMO"** in the **Name** textbox and select **Add** to add the demo keyword to the Token List.
 3. Open Task List window at **View -> Task List** to view, double-click and be redirected to all DEMO locations.
 
-## Relevant VS 2019 Debugging Features (last update: Version 16.4 Preview 3)
+## Relevant VS 2019 Debugging Features (last update: Version 16.5 Preview 1)
 The following list contains debugging tools and corresponding documentation/blogs in Visual Studio that have been demoed using this application.
 
 * [Run to Click](https://devblogs.microsoft.com/devops/run-to-click-debugging-in-visual-studio-2017/)
