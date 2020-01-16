@@ -14,6 +14,8 @@ To turn on bugs, locate comments containing "DEMO," where the bug will be commen
 ## Relevant VS 2019 Debugging Features (last update: Version 16.5 Preview 1)
 The following list contains debugging tools and corresponding documentation/blogs in Visual Studio that have been demoed using this application.
 
+Learn more about the Visual Studio debugger and its features at [aka.ms/debugger](https://aka.ms/debugger).
+
 * [Run to Click](https://devblogs.microsoft.com/devops/run-to-click-debugging-in-visual-studio-2017/)
 * [Pinned Datatips](https://docs.microsoft.com/en-us/visualstudio/debugger/view-data-values-in-data-tips-in-the-code-editor?view=vs-2019)
 * [Set to Next Statement](https://docs.microsoft.com/en-us/visualstudio/debugger/navigating-through-code-with-the-debugger?view=vs-2019#BKMK_Set_the_next_statement_to_execute)
