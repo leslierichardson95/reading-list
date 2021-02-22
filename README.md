@@ -43,7 +43,7 @@ Learn more about the Visual Studio debugger and its features at [aka.ms/debugger
 * [Time-Travel Debugging](https://devblogs.microsoft.com/visualstudio/introducing-time-travel-debugging-for-visual-studio-enterprise-2019/)
 
 ## Debugger videos using this demo app
-* [Ignite 2019 Breakout Session - Debugging Tips & Tricks](https://myignite.techcommunity.microsoft.com/sessions/81610?source=sessions)
+* [Debugging Managed Async Code in VS](https://www.youtube.com/watch?v=aVEug50YpaM)
 * [VS Toolbox Debugging Tips & Tricks Part 1](https://www.youtube.com/watch?v=Uld-2m2tGiI&t) & [Part 2](https://www.youtube.com/watch?v=kQHbGPF7TZQ&t)
 * [Tips & Tricks for .NET Debugging in Visual Studio](https://www.youtube.com/watch?v=lgKInHJ-tcg&t)
 * [Microsoft Build 2019 Breakout Session - Debugging Tips & Tricks](https://www.youtube.com/watch?v=i6gdmT-BdOU&t)
