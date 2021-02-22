@@ -45,5 +45,6 @@ Learn more about the Visual Studio debugger and its features at [aka.ms/debugger
 ## Related Debugger Videos
 * [Debugging Managed Async Code in VS](https://www.youtube.com/watch?v=aVEug50YpaM)
 * [VS Toolbox Debugging Tips & Tricks Part 1](https://www.youtube.com/watch?v=Uld-2m2tGiI&t) & [Part 2](https://www.youtube.com/watch?v=kQHbGPF7TZQ&t)
+* [VS Toolbox Profiling Series Part 1](https://www.youtube.com/watch?v=FpibK0PKfcI)
 * [Tips & Tricks for .NET Debugging in Visual Studio](https://www.youtube.com/watch?v=lgKInHJ-tcg&t)
 * [Microsoft Build 2019 Breakout Session - Debugging Tips & Tricks](https://www.youtube.com/watch?v=i6gdmT-BdOU&t)
