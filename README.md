@@ -35,7 +35,8 @@ Learn more about the Visual Studio debugger and its features at [aka.ms/debugger
 * [Diagnostics Tools Window](https://docs.microsoft.com/en-us/visualstudio/profiling/running-profiling-tools-with-or-without-the-debugger?view=vs-2019#BKMK_Quick_start__Collect_diagnostic_data)
 * [Snapshots on Exceptions](https://devblogs.microsoft.com/visualstudio/snapshots-on-exceptions-while-debugging-with-intellitrace/)
 * [First-Chance Exceptions](https://docs.microsoft.com/en-us/visualstudio/debugger/managing-exceptions-with-the-debugger?view=vs-2019#tell-the-debugger-to-break-when-an-exception-is-thrown)
-* **Parallel Stacks Window for Tasks (Doc link TBA)** - Visualize Tasks flow in asynchronous applications by selecting **Debug > Windows > Parallel Stacks**
+* [Parallel Stacks Window for Tasks](https://devblogs.microsoft.com/visualstudio/debugging-async-code-parallel-stacks-for-tasks/)
+* [Rethrown Exceptions](https://devblogs.microsoft.com/visualstudio/exception-helper-rethrown-exceptions/)
 * [Attach to Linux Docker Container](https://docs.microsoft.com/en-us/visualstudio/debugger/attach-to-running-processes-with-the-visual-studio-debugger?view=vs-2019#BKMK_Docker_Attach)
 * [Source Link](https://github.com/dotnet/sourcelink/blob/master/README.md)
 * [Child Process Debugging Power Tool](https://marketplace.visualstudio.com/items?itemName=vsdbgplat.MicrosoftChildProcessDebuggingPowerTool)
