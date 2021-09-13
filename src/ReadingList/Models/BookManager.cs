@@ -105,11 +105,11 @@ namespace ReadingList.Models
             for (int i = 0; i < neutralBooks.Count; i++)
             {
                 AddShelvedBook(neutralKeysEnumerator[i]);
-                neutralBooks.Remove(neutralKeysEnumerator[i]);
+                //neutralBooks.Remove(neutralKeysEnumerator[i]);
             }
 
             neutralKeysEnumerator.Clear();
-            //neutralBooks.Clear();
+            neutralBooks.Clear();
         }
 
         public void AddRejectedBook(long id)
