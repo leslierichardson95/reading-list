@@ -1,5 +1,5 @@
 # reading-list
-A .NET Core 3.0 web app where a user chooses what to read by giving a thumbs up or thumbs down to random books being displayed (think Tinder, but for books)
+An ASP.NET web app where a user chooses what to read by giving a thumbs up or thumbs down to random books being displayed (think Tinder, but for books)
 
 ## Turn on artificial bugs
 This app was originally created to demo debugging tools in Visual Studio 2019, so a few bugs have been intentionally added to this app in order to illustrate them, but many are commented out by default.
