@@ -10,6 +10,7 @@ namespace ReadingList.Models
 {
     public class BookManager
     {
+        // PRODUCTIVITY: Case preserving find and replace
         // stores list of all books by their id
         private Dictionary<long, Book> neutralBooks = new Dictionary<long, Book>();
         private Dictionary<long, Book> shelvedBooks = new Dictionary<long, Book>();
@@ -36,6 +37,7 @@ namespace ReadingList.Models
             List<Book> books;
             using (StreamReader r = new StreamReader(relativePath))
             {
+                // PRODUCTIVITY: Smart Rename
                 string json = r.ReadToEnd();
                 books = JsonConvert.DeserializeObject<List<Book>>(json);
             }

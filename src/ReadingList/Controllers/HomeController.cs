@@ -8,6 +8,7 @@ using ReadingList.Models;
 
 namespace ReadingList.Controllers
 {
+    // PRODUCTIVITY: Inheritance Margin, Navigate to Source
     public class HomeController : Controller
     {
         private readonly BookManager bookManager;
