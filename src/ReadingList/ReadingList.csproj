@@ -20,6 +20,14 @@
     <PackageReference Include="WebApiRouteDebugger" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="Q:\source\reading-list\src\ReadingList\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Q:\source\reading-list\src\ReadingList\.editorconfig" />
+  </ItemGroup>
+
 
   
 </Project>

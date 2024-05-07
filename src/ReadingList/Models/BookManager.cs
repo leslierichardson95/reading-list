@@ -38,8 +38,8 @@ namespace ReadingList.Models
             using (StreamReader r = new StreamReader(relativePath))
             {
                 // PRODUCTIVITY: Smart Rename
-                string json = r.ReadToEnd();
-                books = JsonConvert.DeserializeObject<List<Book>>(json);
+                var bookDataJson = r.ReadToEnd();
+                books = JsonConvert.DeserializeObject<List<Book>>(bookDataJson);
             }
 
             for (int i = 0; i < books.Count; i++)
